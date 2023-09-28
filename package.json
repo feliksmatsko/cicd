@@ -1,6 +1,6 @@
 {
   "name": "cicd",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Add 15",
   "main": "index.js",
   "scripts": {
