@@ -1,4 +1,4 @@
-name: Pull Request Labels
+name: 'Dev - PR Label Checker'
 on:
   pull_request:
     branches:
@@ -10,7 +10,8 @@ on:
       - unlabeled
       - synchronize
 jobs:
-  label:
+  check_labels:
+    name: 'Check PR Labels'
     runs-on: ubuntu-latest
     permissions:
       issues: write
