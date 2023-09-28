@@ -1,19 +1,24 @@
-name: 'Dev - PR Open'
-
+name: Pull Request Labels
 on:
   pull_request:
     branches:
       - dev
     types:
       - opened
-
+      - reopened
+      - labeled
+      - unlabeled
+      - synchronize
 jobs:
-  add_comment:
-    name: 'Add Comment'
+  label:
     runs-on: ubuntu-latest
     permissions:
+      issues: write
       pull-requests: write
     steps:
-      - uses: mshick/add-pr-comment@v2
+      - uses: mheap/github-action-required-labels@v5
         with:
-          message: Please set a versioning label of either `semver:major`, `semver:minor`, or `semver:patch` to the pull request.
+          mode: exactly
+          count: 1
+          labels: "semver:patch, semver:minor, semver:major"
+          add_comment: true
