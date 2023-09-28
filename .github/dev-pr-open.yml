@@ -2,7 +2,7 @@ name: Pull Request Labels
 on:
   pull_request:
     branches:
-      - dev
+      - 'dev'
     types:
       - opened
       - reopened
@@ -20,5 +20,5 @@ jobs:
         with:
           mode: exactly
           count: 1
-          labels: "semver:patch, semver:minor, semver:major"
+          labels: "semver:major, semver:minor, semver:patch"
           add_comment: true
