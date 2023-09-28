@@ -24,6 +24,9 @@ jobs:
       #          git config --global user.email "${{ secrets.GH_ORG_EMAIL }}"
       #          git config --global user.name "${{ secrets.GH_ORG_NAME }}"
 
+      - name: List directory
+        run: ls -al
+
       - name: Apply version bump (major)
         if: contains(github.event.pull_request.labels.*.name, 'major')
         run: npm version major
