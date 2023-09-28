@@ -25,5 +25,5 @@ jobs:
         with:
           mode: exactly
           count: 1
-          labels: "semver:major, semver:minor, semver:patch"
+          labels: "major, minor, patch"
           add_comment: true
