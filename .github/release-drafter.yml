@@ -11,10 +11,10 @@ categories:
   - title: '🚀 Features'
     labels:
       - 'feature'
-  - title: '🛠️ Bug Fixes'
+  - title: '🧯 Bug Fixes'
     labels:
       - 'fix'
-  - title: '🧰 Maintenance'
+  - title: '🛠 Maintenance'
 
 exclude-labels:
   - 'skip-changelog'
