@@ -1,0 +1,49 @@
+name-template: 'v$RESOLVED_VERSION'
+tag-template: 'v$RESOLVED_VERSION'
+template: |
+  # What's Changed
+
+  $CHANGES
+
+  **Full Changelog**: https://github.com/$OWNER/$REPOSITORY/compare/$PREVIOUS_TAG...v$RESOLVED_VERSION
+
+categories:
+  - title: '🚀 Features'
+    labels:
+      - 'feature'
+  - title: '🛠️ Bug Fixes'
+    labels:
+      - 'fix'
+  - title: '🧰 Maintenance'
+
+exclude-labels:
+  - 'skip-changelog'
+
+autolabeler:
+  - label: 'feature'
+    title:
+      - '/^add/i'
+  - label: 'fix'
+    title:
+      - '/^fix/i'
+  - label: 'major'
+    title:
+      - '/^drop/i'
+  - label: 'minor'
+    title:
+      - '/^add/i'
+  - label: 'patch'
+    title:
+      - '/^(cut)|(fix)|(bump)|(make)|(optimize)|(refactor)|(reformat)|(document)/i'
+
+version-resolver:
+  major:
+    labels:
+      - 'major'
+  minor:
+    labels:
+      - 'minor'
+  patch:
+    labels:
+      - 'patch'
+  default: patch

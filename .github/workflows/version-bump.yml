@@ -3,7 +3,7 @@ name: 'Dev - PR Close Version Bump'
 on:
   pull_request:
     branches:
-      - 'master'
+      - 'master_tmp'
     types:
       - closed
 
