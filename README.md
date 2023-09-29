@@ -1,3 +1,3 @@
 # cicd
 
-Add 25
+Add 50
