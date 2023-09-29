@@ -2,8 +2,7 @@ name: 'CI'
 
 on:
   push:
-    branch:
-      - master
+    branches: [ 'master' ]
     tags:
       - 'v*'
 
