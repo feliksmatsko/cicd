@@ -15,6 +15,7 @@ jobs:
 
     steps:
       - name: Build Changelog
+        id: github_release
         uses: mikepenz/release-changelog-builder-action@v3
         with:
           configuration: "configuration.json"

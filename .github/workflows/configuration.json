@@ -30,17 +30,17 @@
     {
       "pattern": "^Add",
       "target": "feature",
-      "flags": "i"
+      "flags": "gu"
     },
     {
       "pattern": "^Fix",
       "target": "fix",
-      "flags": "i"
+      "flags": "gu"
     },
     {
       "pattern": "^Test",
       "target": "test",
-      "flags": "i"
+      "flags": "gu"
     }
   ],
   "base_branches": [
