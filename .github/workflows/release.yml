@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     tags:
-      - tmp*.*.*
+      - blabla*.*.*
 
 env:
   HUSKY: '0'

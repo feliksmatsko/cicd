@@ -1,0 +1,49 @@
+{
+  "categories": [
+    {
+      "title": "## 🚀 Features",
+      "labels": [
+        "feature"
+      ]
+    },
+    {
+      "title": "## 🐛 Fixes",
+      "labels": [
+        "fix"
+      ]
+    },
+    {
+      "title": "## 🧪 Tests",
+      "labels": [
+        "test"
+      ]
+    },
+    {
+      "title": "## 💬 Other",
+      "labels": []
+    }
+  ],
+  "ignore_labels": [
+    "ignore"
+  ],
+  "label_extractor": [
+    {
+      "pattern": "^Add",
+      "target": "feature",
+      "flags": "i"
+    },
+    {
+      "pattern": "^Fix",
+      "target": "fix",
+      "flags": "i"
+    },
+    {
+      "pattern": "^Test",
+      "target": "test",
+      "flags": "i"
+    }
+  ],
+  "base_branches": [
+    "main"
+  ]
+}
