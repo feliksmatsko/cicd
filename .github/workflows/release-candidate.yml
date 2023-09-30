@@ -64,6 +64,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          ref: master
 
       - name: Git config
         run: |
@@ -72,7 +74,7 @@ jobs:
 
       - name: Get release version
         id: get_version
-        run: echo "{version}=$(node -p "require('./package.json').version")" >> $GITHUB_STATE
+        run: echo "version=$(node -p 'require("./package.json").version')" >> $GITHUB_ENV
 
       - name: Checkout release branch
         run: git checkout -b releases/v${{ steps.get_version.outputs.version }}
