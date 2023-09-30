@@ -70,9 +70,9 @@ jobs:
           git config user.email github-actions@github.com
           git config user.name github-actions
 
-      - id: get_version
-        name: Get version
-        uses: battila7/get-version-action@v2
+      - name: Get release version
+        id: get_version
+        run: echo "{version}=$(node -p "require('./package.json').version")" >> $GITHUB_STATE
 
       - name: Checkout release branch
         run: git checkout -b releases/v${{ steps.get_version.outputs.version }}
