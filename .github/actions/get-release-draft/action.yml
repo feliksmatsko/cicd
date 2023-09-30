@@ -4,15 +4,9 @@ inputs:
   github-token:
     description: "GitHub token"
     required: true
-  owner:
-    description: "Repository owner"
-    required: true
-  repo:
-    description: "Repository name"
-    required: true
 outputs:
-  latest-draft-release-name:
-    description: "The name of the latest draft release"
+  version:
+    description: "Version of the latest draft release"
 runs:
   using: "node20"
   main: "main.js"

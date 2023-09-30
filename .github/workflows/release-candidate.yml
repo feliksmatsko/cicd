@@ -22,10 +22,19 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Validate Branch Name
+      - name: Verify Branch Name
         uses: ./.github/actions/verify-branch-name
         with:
           name: "master"
+
+      - name: Get Release Version
+        id: version
+        uses: ./.github/actions/get-release-draft
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: TMP
+        run: echo "${{ steps.version.outputs.version }}"
 
 #      - name: Git config
 #        run: |
