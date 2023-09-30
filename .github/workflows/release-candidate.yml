@@ -1,0 +1,91 @@
+name: Release Candidate
+
+on:
+  workflow_dispatch:
+    inputs:
+      semver:
+        type: choice
+        required: true
+        description: 'Semver level for version bump'
+        options:
+          - major
+          - minor
+          - patch
+
+env:
+  HUSKY: '0'
+
+jobs:
+  bump-version:
+    name: 'Bump version'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: master
+
+      - name: Git config
+        run: |
+          git config user.email github-actions@github.com
+          git config user.name github-actions
+
+      - name: Apply version bump (major)
+        if: github.event.inputs.semver == 'major'
+        run: npm version major
+
+      - name: Apply version bump (minor)
+        if: github.event.inputs.semver == 'minor'
+        run: npm version minor
+
+      - name: Apply version bump (patch)
+        if: github.event.inputs.semver == 'patch'
+        run: npm version patch
+
+      - name: Git push version bump
+        run: git push origin master --follow-tags --force
+
+      - id: set-version
+        name: Output version change
+        run: npm pkg get version
+
+#  build:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v4
+#        with:
+#          fetch-depth: 0
+#
+#      #      - name: npm ci
+#      #        run: npm ci
+#
+#      #      - name: npm test
+#      #        run: npm test
+#
+#      #      - name: Deploy
+#      #        run: ...
+#
+#      - name: version
+#        id: version
+#        run: |
+#          tag=${GITHUB_REF/refs\/tags\//}
+#          version=${tag#v}
+#          major=${version%%.*}
+#          echo "tag=${tag}" >> $GITHUB_OUTPUT
+#          echo "version=${version}" >> $GITHUB_OUTPUT
+#          echo "major=${major}" >> $GITHUB_OUTPUT
+#
+#      - uses: release-drafter/release-drafter@v5
+#        with:
+#          version: ${{ steps.version.outputs.version }}
+#          publish: true
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#
+#      - name: force update major tag
+#        run: |
+#          git tag v${{ steps.version.outputs.major }} ${{ steps.version.outputs.tag }} -f
+#          git push origin refs/tags/v${{ steps.version.outputs.major }} -f

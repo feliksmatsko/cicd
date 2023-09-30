@@ -5,19 +5,22 @@ template: |
 
   $CHANGES
 
-  **Full Changelog**: https://github.com/$OWNER/$REPOSITORY/compare/$PREVIOUS_TAG...v$RESOLVED_VERSION
+  **Full Changelog**: https://github.com/$OWNER/$REPOSITORY/compare/$PREVIOUS_TAG...v$RESOLVED_VERSION  
 
 categories:
   - title: '🚀 Features'
     labels:
       - 'feature'
-  - title: '🐛 Fixes'
+  - title: '🧯 Fixes'
     labels:
       - 'fix'
-  - title: '💬 Other'
+  - title: '🧪 Tests'
+    labels:
+      - 'test'
+  - title: '🛠 Other'
 
 exclude-labels:
-  - 'skip-changelog'
+  - 'ignore'
 
 autolabeler:
   - label: 'feature'
@@ -26,6 +29,9 @@ autolabeler:
   - label: 'fix'
     title:
       - '/^fix/i'
+  - label: 'test'
+    title:
+      - '/^test/i'
   - label: 'major'
     title:
       - '/^drop/i'
@@ -34,7 +40,7 @@ autolabeler:
       - '/^add/i'
   - label: 'patch'
     title:
-      - '/^(cut)|(fix)|(bump)|(make)|(optimize)|(refactor)|(reformat)|(document)/i'
+      - '/^(cut)|(fix)|(test)|(bump)|(make)|(optimize)|(refactor)|(reformat)|(document)/i'
 
 version-resolver:
   major:

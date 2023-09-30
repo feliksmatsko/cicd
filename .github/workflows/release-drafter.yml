@@ -3,15 +3,12 @@ name: Release Drafter
 on:
   push:
     branches:
-      - tmp_master
-#  pull_request:
-#    types:
-#      - opened
-#      - reopened
-#      - synchronize
-
-permissions:
-  contents: read
+      - master
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
 
 jobs:
   update_release_draft:
