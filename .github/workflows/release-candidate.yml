@@ -7,7 +7,7 @@ on:
         type: choice
         required: true
         description: 'SemVer level for version bump'
-        default: 'Select level'
+#        default: 'Select level'
         choices:
           - 'Select level'
           - 'major'
