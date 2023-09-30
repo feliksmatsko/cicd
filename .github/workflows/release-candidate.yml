@@ -6,12 +6,13 @@ on:
       semver:
         type: choice
         required: true
-        description: 'Choose the environment'
-        default: 'Please select an environment'
-        choices:
-          - 'Please select an environment'
-          - 'staging'
-          - 'production'
+        description: 'SemVer level for version bump'
+        default: 'Select level'
+        options:
+          - 'Select level'
+          - 'major'
+          - 'minor'
+          - 'patch'
 
 env:
   HUSKY: '0'
