@@ -1,0 +1,9 @@
+name: "Verify Branch Name"
+description: "Validates the triggering branch against a given name"
+inputs:
+  name:
+    description: 'Branch name to validate against the triggering branch'
+    required: true
+runs:
+  using: "node20"
+  main: 'main.js'
