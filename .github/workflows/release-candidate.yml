@@ -58,14 +58,15 @@ jobs:
       - name: Get release version
         id: get_version
         run: |
-          echo "Current version: $(npm pkg get version)"
-          echo "version=$(node -p 'require("./package.json").version')" >> $GITHUB_ENV
+          version=$(node -p 'require("./package.json").version')
+          echo "Current version: $version"
+          echo "version=$version" >> $GITHUB_ENV
 
       - name: Checkout release branch
-        run: git checkout -b releases/v${{ steps.get_version.outputs.version }}
+        run: git checkout -b releases/v${{ env.version }}
 
       - name: Push release branch
-        run: git push origin releases/v${{ steps.get_version.outputs.version }}
+        run: git push origin releases/v${{ env.version }}
 
 #  build:
 #    runs-on: ubuntu-latest
