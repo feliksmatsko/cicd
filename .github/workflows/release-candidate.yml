@@ -18,8 +18,8 @@ env:
   HUSKY: '0'
 
 jobs:
-  version:
-    name: 'Bump version'
+  release_candidate:
+    name: 'Create release candidate'
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -53,30 +53,13 @@ jobs:
         run: npm version patch
 
       - name: Git push version bump
-        run: |
-          git push origin master --follow-tags --force
-          echo "Current version: $(npm pkg get version)"
-
-  branch:
-    name: 'Create release branch'
-    needs: version
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          ref: master
-
-      - name: Git config
-        run: |
-          git config user.email github-actions@github.com
-          git config user.name github-actions
+        run: git push origin master --follow-tags --force
 
       - name: Get release version
         id: get_version
-        run: echo "version=$(node -p 'require("./package.json").version')" >> $GITHUB_ENV
+        run: |
+          echo "Current version: $(npm pkg get version)"
+          echo "version=$(node -p 'require("./package.json").version')" >> $GITHUB_ENV
 
       - name: Checkout release branch
         run: git checkout -b releases/v${{ steps.get_version.outputs.version }}
