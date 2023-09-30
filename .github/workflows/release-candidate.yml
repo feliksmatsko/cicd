@@ -77,9 +77,7 @@ jobs:
         with:
           commitish: master
           version: ${{ steps.version.outputs.version }}
-          prerelease: true
           publish: true
-          latest: true
 
       - name: Checkout release branch
         run: git checkout -b releases/v${{ steps.version.outputs.version }}
