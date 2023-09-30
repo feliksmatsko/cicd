@@ -16,7 +16,7 @@ env:
   HUSKY: '0'
 
 jobs:
-  bump-version:
+  version:
     name: 'Bump version'
     runs-on: ubuntu-latest
     permissions:
@@ -47,9 +47,28 @@ jobs:
       - name: Git push version bump
         run: git push origin master --follow-tags --force
 
-      - id: set-version
-        name: Output version change
-        run: npm pkg get version
+  branch:
+    name: 'Create release branch'
+    needs: version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Git config
+        run: |
+          git config user.email github-actions@github.com
+          git config user.name github-actions
+
+      - id: get_version
+        name: Get version
+        uses: battila7/get-version-action@v2
+
+      - name: Checkout release branch
+        run: git checkout -b releases/v${{ steps.get_version.outputs.version }}
+
+      - name: Push release branch
+        run: git push origin releases/v${{ steps.get_version.outputs.version }}
 
 #  build:
 #    runs-on: ubuntu-latest
