@@ -2,7 +2,9 @@ name: Release Candidate
 
 #on: workflow_dispatch
 on:
-  push: master
+  push:
+    branches:
+      - master
 
 env:
   HUSKY: '0'
