@@ -23,10 +23,9 @@ jobs:
           fetch-depth: 0
 
       - name: Validate Branch Name
-
         uses: ./.github/actions/verify-branch-name
         with:
-          name: "master"
+          name: "maste"
 
 #      - name: Git config
 #        run: |
