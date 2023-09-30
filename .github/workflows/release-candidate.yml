@@ -7,11 +7,8 @@ on:
         type: choice
         required: true
         description: 'Semver level for version bump'
-        default: patch
-        options:
-          - major
-          - minor
-          - patch
+        default: ''
+        options: [ 'major', 'minor', 'patch' ]
 
 env:
   HUSKY: '0'
