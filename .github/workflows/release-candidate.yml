@@ -70,21 +70,14 @@ jobs:
           echo "version=${version}" >> $GITHUB_OUTPUT
           echo "### Release: v$version" >> $GITHUB_STEP_SUMMARY
 
+
+
+
       - name: Checkout release branch
         run: git checkout -b releases/v${{ steps.version.outputs.version }}
 
       - name: Push release branch
         run: git push origin releases/v${{ steps.version.outputs.version }}
-
-#      - name: version
-#        id: version
-#        run: |
-#          tag=${GITHUB_REF/refs\/tags\//}
-#          version=${tag#v}
-#          major=${version%%.*}
-#          echo "tag=${tag}" >> $GITHUB_OUTPUT
-#          echo "version=${version}" >> $GITHUB_OUTPUT
-#          echo "major=${major}" >> $GITHUB_OUTPUT
 #
 #      - uses: release-drafter/release-drafter@v5
 #        with:
