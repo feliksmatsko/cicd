@@ -25,6 +25,7 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
+          commitMode: true
           body: ${{steps.github_release.outputs.changelog}}
           draft: true
 #          name:
