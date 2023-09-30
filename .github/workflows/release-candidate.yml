@@ -67,20 +67,14 @@ jobs:
         id: version
         run: |
           version=$(node -p 'require("./package.json").version')
-          major=${version%%.*}
-          echo "### Release: v$version" >> $GITHUB_STEP_SUMMARY
-          echo "tag=v${tag}" >> $GITHUB_OUTPUT
           echo "version=${version}" >> $GITHUB_OUTPUT
-          echo "major=${major}" >> $GITHUB_OUTPUT
-          echo "Tag: $tag" >> $GITHUB_STEP_SUMMARY
-          echo "Version: $version" >> $GITHUB_STEP_SUMMARY
-          echo "Major: $major" >> $GITHUB_STEP_SUMMARY
+          echo "### Release: v$version" >> $GITHUB_STEP_SUMMARY
 
       - name: Checkout release branch
-        run: git checkout -b releases/v${{ env.version }}
+        run: git checkout -b releases/v${{ steps.version.outputs.version }}
 
       - name: Push release branch
-        run: git push origin releases/v${{ env.version }}
+        run: git push origin releases/v${{ steps.version.outputs.version }}
 
 #      - name: version
 #        id: version
@@ -98,8 +92,3 @@ jobs:
 #          publish: true
 #        env:
 #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#
-#      - name: force update major tag
-#        run: |
-#          git tag v${{ steps.version.outputs.major }} ${{ steps.version.outputs.tag }} -f
-#          git push origin refs/tags/v${{ steps.version.outputs.major }} -f
