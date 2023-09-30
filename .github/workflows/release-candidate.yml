@@ -76,9 +76,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           commitish: master
-          version: v3.3.3
-          publish: true
+          version: ${{ steps.version.outputs.version }}
           prerelease: true
+          publish: true
+          latest: true
 
       - name: Checkout release branch
         run: git checkout -b releases/v${{ steps.version.outputs.version }}
