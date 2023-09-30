@@ -24,16 +24,24 @@ jobs:
     permissions:
       contents: write
     steps:
+      - name: Exit if not on master branch
+        run: |
+          if [[ "${{ github.ref }}" != "refs/heads/master" ]]; then
+            echo "This action can only run on the master branch. Exiting."
+            exit 1
+          fi
+
       - name: Check required semver input
         run: |
           if [[ "${{ github.event.inputs.semver }}" == "Select level" ]]; then
             echo "SemVer is required!"
             exit 1
           fi
+
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: master
+          fetch-depth: 0
 
       - name: Git config
         run: |
@@ -52,15 +60,21 @@ jobs:
         if: github.event.inputs.semver == 'patch'
         run: npm version patch
 
-      - name: Git push version bump
+      - name: Push version bump
         run: git push origin master --follow-tags --force
 
-      - name: Get release version
-        id: get_version
+      - name: Output version
+        id: version
         run: |
           version=$(node -p 'require("./package.json").version')
-          echo "Current version: $version"
-          echo "version=$version" >> $GITHUB_ENV
+          major=${version%%.*}
+          echo "### Release: v$version" >> $GITHUB_STEP_SUMMARY
+          echo "tag=v${tag}" >> $GITHUB_OUTPUT
+          echo "version=${version}" >> $GITHUB_OUTPUT
+          echo "major=${major}" >> $GITHUB_OUTPUT
+          echo "Tag: $tag" >> $GITHUB_STEP_SUMMARY
+          echo "Version: $version" >> $GITHUB_STEP_SUMMARY
+          echo "Major: $major" >> $GITHUB_STEP_SUMMARY
 
       - name: Checkout release branch
         run: git checkout -b releases/v${{ env.version }}
@@ -68,23 +82,6 @@ jobs:
       - name: Push release branch
         run: git push origin releases/v${{ env.version }}
 
-#  build:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v4
-#        with:
-#          fetch-depth: 0
-#
-#      #      - name: npm ci
-#      #        run: npm ci
-#
-#      #      - name: npm test
-#      #        run: npm test
-#
-#      #      - name: Deploy
-#      #        run: ...
-#
 #      - name: version
 #        id: version
 #        run: |
