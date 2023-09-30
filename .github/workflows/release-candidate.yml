@@ -23,6 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      pull-requests: write
     steps:
       - name: Exit if not on master branch
         run: |
@@ -70,18 +71,17 @@ jobs:
           echo "version=${version}" >> $GITHUB_OUTPUT
           echo "### Release: v$version" >> $GITHUB_STEP_SUMMARY
 
-
-
+      - uses: release-drafter/release-drafter@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          commitish: master
+          version: v3.3.3
+          publish: true
+          prerelease: true
 
       - name: Checkout release branch
         run: git checkout -b releases/v${{ steps.version.outputs.version }}
 
       - name: Push release branch
         run: git push origin releases/v${{ steps.version.outputs.version }}
-#
-#      - uses: release-drafter/release-drafter@v5
-#        with:
-#          version: ${{ steps.version.outputs.version }}
-#          publish: true
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
