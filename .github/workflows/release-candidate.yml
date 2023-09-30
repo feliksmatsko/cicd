@@ -4,15 +4,13 @@ on:
   workflow_dispatch:
     inputs:
       semver:
-        type: choice
+        description: 'Choose the environment'
         required: true
-        description: 'SemVer level for version bump'
-#        default: 'Select level'
+        default: 'Please select an environment'
         choices:
-          - 'Select level'
-          - 'major'
-          - 'minor'
-          - 'patch'
+          - 'Please select an environment'
+          - 'staging'
+          - 'production'
 
 env:
   HUSKY: '0'
