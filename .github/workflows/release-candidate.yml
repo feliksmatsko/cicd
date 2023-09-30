@@ -4,8 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       semver:
-        description: 'Choose the environment'
+        type: choice
         required: true
+        description: 'Choose the environment'
         default: 'Please select an environment'
         choices:
           - 'Please select an environment'
