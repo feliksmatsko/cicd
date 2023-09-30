@@ -25,7 +25,7 @@ jobs:
       - name: Validate Branch Name
         uses: ./.github/actions/verify-branch-name
         with:
-          name: "maste"
+          name: "master"
 
 #      - name: Git config
 #        run: |

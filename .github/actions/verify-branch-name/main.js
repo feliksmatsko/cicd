@@ -7,9 +7,9 @@ try {
     const triggeringBranch = payload.ref.replace('refs/heads/', '');
 
     if (inputBranch === triggeringBranch) {
-        core.info(`Branch name matches: ${inputBranch}`);
+        core.info(`Branch name matches: "${inputBranch}"`);
     } else {
-        core.setFailed(`Error: Branch name doesn't match. Expected ${inputBranch}, got ${triggeringBranch}`);
+        core.setFailed(`Error: Branch name doesn't match. Expected "${inputBranch}", got "${triggeringBranch}"`);
     }
 } catch (error) {
     core.setFailed(error.message);
