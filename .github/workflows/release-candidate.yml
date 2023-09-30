@@ -6,9 +6,13 @@ on:
       semver:
         type: choice
         required: true
-        description: 'Semver level for version bump'
-        default: ''
-        options: [ 'major', 'minor', 'patch' ]
+        description: 'SemVer level for version bump'
+        default: 'Select level'
+        choices:
+          - 'Select level'
+          - 'major'
+          - 'minor'
+          - 'patch'
 
 env:
   HUSKY: '0'
@@ -20,6 +24,12 @@ jobs:
     permissions:
       contents: write
     steps:
+      - name: Check required semver input
+        run: |
+          if [[ "${{ github.event.inputs.semver }}" == "Select level" ]]; then
+            echo "SemVer is required!"
+            exit 1
+          fi
       - name: Checkout code
         uses: actions/checkout@v4
         with:
