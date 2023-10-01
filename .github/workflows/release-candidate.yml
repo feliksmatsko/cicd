@@ -44,11 +44,10 @@ jobs:
       - name: Apply version bump
         run: |
           VERSION=${{ steps.version.outputs.version }}
-          npm version $VERSION
+          npm version $VERSION -m "v%s"
           git tag v$VERSION
-          git push origin master --tags --force
-#          git push origin v2.12.1 --force
-#          git push --follow-tags
+          git push --follow-tags --force
+          git push origin master --follow-tags --force
 
 
 #      - name: Apply version bump (minor)
