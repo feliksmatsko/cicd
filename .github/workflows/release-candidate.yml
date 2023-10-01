@@ -17,15 +17,15 @@ jobs:
       contents: write
       pull-requests: write
     steps:
-      - name: Verify Branch Name
-        uses: ./.github/actions/verify-branch-name
-        with:
-          name: "master"
-
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Verify Branch Name
+        uses: ./.github/actions/verify-branch-name
+        with:
+          name: "master"
 
       - name: Git config
         run: |
