@@ -41,7 +41,6 @@ jobs:
           CURRENT_TAG=${{ steps.release_options.outputs.current_tag }}
           npm version $CURRENT_VERSION -m "Bump to version %s" --no-git-tag-version
           git push
-          git push origin $CURRENT_TAG --force
 
       - uses: release-drafter/release-drafter@v5
         env:
