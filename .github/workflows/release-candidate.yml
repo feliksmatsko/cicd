@@ -42,4 +42,4 @@ jobs:
         run: |
           TAG_NAME=${{ steps.release_options.outputs.tag_name }}
           RELEASE_URL=${{ steps.release_options.outputs.url }}
-          echo "## 🎉 Release [$TAG_NAME]($RELEASE_URL) successfully created" >> $GITHUB_STEP_SUMMARY
+          echo "## 🎉 Candidate [release/$TAG_NAME]($RELEASE_URL) successfully created" >> $GITHUB_STEP_SUMMARY
