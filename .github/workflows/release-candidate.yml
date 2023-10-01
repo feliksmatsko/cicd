@@ -42,21 +42,13 @@ jobs:
         run: |
           VERSION=${{ steps.release.outputs.version }}
           TAG_NAME=${{ steps.release.outputs.tag_name }}
-          echo "${VERSION} ${TAG_NAME}"
-#          git tag -d v$VERSION || echo "Tag v${{VERSION}} not found locally, skipping deletion"
-#          git push origin :refs/tags/v || echo "Tag v${{VERSION}} not found remotely, skipping deletion"
-#          npm version $VERSION -m "Bump to version %s"
-#          git push
-#          git push origin v$VERSION --force
-          
-#      - name: Apply version bump (minor)
-#        if: github.event.inputs.semver == 'minor'
-#        run: npm version minor
-#
-#      - name: Apply version bump (patch)
-#        if: github.event.inputs.semver == 'patch'
-#        run: npm version patch
-#
+          git tag -d $TAG_NAME || echo "Tag ${{TAG_NAME}} not found locally, skipping deletion"
+          git push origin :refs/tags/$TAG_NAME || echo "Tag ${{TAG_NAME}} not found remotely, skipping deletion"
+          npm version $VERSION -m "Bump to version %s"
+          git push
+          git push origin $TAG_NAME --force
+
+
 #      - name: Push version bump
 #        run: git push origin master --follow-tags --force
 #
@@ -77,10 +69,10 @@ jobs:
 #          prerelease: true
 #
 #      - name: Checkout release branch
-#        run: git checkout -b releases/v${{ steps.version.outputs.version }}
+#        run: git checkout -b release/v${{ steps.version.outputs.version }}
 #
 #      - name: Push release branch
-#        run: git push origin releases/v${{ steps.version.outputs.version }}
+#        run: git push origin release/v${{ steps.version.outputs.version }}
 
 #- name: Summary
 #await core.summary.addRaw(`Release Version: ${version}`).write();
