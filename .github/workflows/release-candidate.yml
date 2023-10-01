@@ -34,7 +34,7 @@ jobs:
 
       - name: Get Release Options
         id: release
-        uses: ./.github/actions/get-release-version
+        uses: ./.github/actions/get-release-draft
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
