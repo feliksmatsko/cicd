@@ -34,6 +34,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
+      # TODO: refactor to action
       - name: Apply version bump
         run: |
           VERSION=${{ steps.release.outputs.version }}
@@ -47,14 +48,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           commitish: master
-          version: ${{ steps.version.outputs.version }}
+          version: ${{ steps.release.outputs.version }}
           publish: true
 
-      - name: Checkout release branch
-        run: git checkout -b release/v${{ steps.version.outputs.version }}
-
-      - name: Push release branch
-        run: git push origin release/v${{ steps.version.outputs.version }}
+      - name: Create release branch
+        run: |
+          TAG_NAME=${{ steps.release.outputs.tag_name }}
+          git checkout -b release/$TAG_NAME
+          git push origin release/$TAG_NAME
 
       - name: Summary
         run: echo "## 🎉 Release ${{ steps.release.outputs.tag_name }} successfully created" >> $GITHUB_STEP_SUMMARY
