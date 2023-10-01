@@ -17,15 +17,20 @@ jobs:
       contents: write
       pull-requests: write
     steps:
+      - name: Verify Branch Name
+        uses: ./.github/actions/verify-branch-name
+        with:
+          name: "master"
+
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Verify Branch Name
-        uses: ./.github/actions/verify-branch-name
-        with:
-          name: "master"
+      - name: Git config
+        run: |
+          git config user.email github-actions@github.com
+          git config user.name github-actions    
 
       - name: Get Release Version
         id: version
@@ -33,20 +38,11 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: TMP
-        run: echo "${{ steps.version.outputs.version }}"
-
-      - name: Git config
-        run: |
-          git config user.email github-actions@github.com
-          git config user.name github-actions
-
       - name: Apply version bump
         run: |
           VERSION=${{ steps.version.outputs.version }}
           npm version $VERSION -m "Bump to version %s"
           git push origin v$VERSION --force
-
 
 #      - name: Apply version bump (minor)
 #        if: github.event.inputs.semver == 'minor'
