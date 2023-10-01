@@ -36,20 +36,18 @@ jobs:
       - name: TMP
         run: echo "${{ steps.version.outputs.version }}"
 
-#      - name: Git config
-#        run: |
-#          git config user.email github-actions@github.com
-#          git config user.name github-actions
+      - name: Git config
+        run: |
+          git config user.email github-actions@github.com
+          git config user.name github-actions
+
+      - name: Apply version bump
+        run: |
+          npm version ${steps.version.outputs.version}
+          git tag v${steps.version.outputs.version}
+          git push origin master --tags --force
 
 
-
-
-
-
-#      - name: Apply version bump (major)
-#        if: github.event.inputs.semver == 'major'
-#        run: npm version major
-#
 #      - name: Apply version bump (minor)
 #        if: github.event.inputs.semver == 'minor'
 #        run: npm version minor
@@ -82,3 +80,6 @@ jobs:
 #
 #      - name: Push release branch
 #        run: git push origin releases/v${{ steps.version.outputs.version }}
+
+#- name: Summary
+#await core.summary.addRaw(`Release Version: ${version}`).write();
