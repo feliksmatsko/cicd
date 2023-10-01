@@ -32,18 +32,23 @@ jobs:
           git config user.email github-actions@github.com
           git config user.name github-actions    
 
-      - name: Get Release Version
-        id: version
+      - name: Get Release Options
+        id: release
         uses: ./.github/actions/get-release-version
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Apply version bump
         run: |
-          VERSION=${{ steps.version.outputs.version }}
-          npm version $VERSION -m "Bump to version %s"
-          git push origin v$VERSION --force
-
+          VERSION=${{ steps.release.outputs.version }}
+          TAG_NAME=${{ steps.release.outputs.tag_name }}
+          echo "${VERSION} ${TAG_NAME}"
+#          git tag -d v$VERSION || echo "Tag v${{VERSION}} not found locally, skipping deletion"
+#          git push origin :refs/tags/v || echo "Tag v${{VERSION}} not found remotely, skipping deletion"
+#          npm version $VERSION -m "Bump to version %s"
+#          git push
+#          git push origin v$VERSION --force
+          
 #      - name: Apply version bump (minor)
 #        if: github.event.inputs.semver == 'minor'
 #        run: npm version minor
