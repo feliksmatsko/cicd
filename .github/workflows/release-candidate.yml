@@ -18,35 +18,25 @@ jobs:
         id: release_options
         uses: ./.github/actions/get-release-options
 
-      - name: Git config
+      - name: Setup git config
         run: |
           git config user.email github-actions@github.com
           git config user.name github-actions
 
-      - name: TMP
+      - name: Apply version bump
         run: |
           VERSION=${{ steps.release_options.outputs.version }}
+          npm version $VERSION -m "Bump to version %s" --no-git-tag-version
+          git push
+
+      - name: Create release branch
+        run: |
           TAG_NAME=${{ steps.release_options.outputs.tag_name }}
-          PRERELEASE=${{ steps.release_options.outputs.prerelease }}
-          echo version: $VERSION
-          echo tag_name: $TAG_NAME
-          echo prerelease: $PRERELEASE
+          git checkout -b release/$TAG_NAME
+          git push origin release/$TAG_NAME
 
-#      - name: Apply version bump
-#        run: |
-#          RELEASE_VERSION=${{ steps.release_options.outputs.current_version }}
-#          npm version $RELEASE_VERSION -m "Bump to version %s" --no-git-tag-version
-#          git push
-
-#      - name: Create release branch
-#        run: |
-#          RELEASE_TAG=${{ steps.release_options.outputs.tag_name }}
-#          git checkout -b release/$RELEASE_TAG
-#          git push origin release/$RELEASE_TAG
-#
-#      - name: Print summary
-#        run: |
-#          RELEASE_TAG=${{ steps.release_options.outputs.tag_name }}
-##          TODO: MOVE TO SCRIPT
-#          RELEASE_URL=https://github.com/feliksmatsko/cicd/releases/tag/$RELEASE_TAG
-#          echo "## 🎉 Release [$RELEASE_TAG]($RELEASE_URL) successfully created" >> $GITHUB_STEP_SUMMARY
+      - name: Print summary
+        run: |
+          TAG_NAME=${{ steps.release_options.outputs.tag_name }}
+          RELEASE_URL=${{ steps.release_options.outputs.url }}
+          echo "## 🎉 Release [$TAG_NAME]($RELEASE_URL) successfully created" >> $GITHUB_STEP_SUMMARY

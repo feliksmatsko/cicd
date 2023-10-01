@@ -5,6 +5,8 @@ outputs:
     description: "Release tag name"
   version:
     description: "Release version derived from tag name"
+  url:
+    description: "Release page url"
 runs:
   using: "node20"
   main: "main.js"
