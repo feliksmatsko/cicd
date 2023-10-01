@@ -1,0 +1,67 @@
+name: _release_candidate
+
+on:
+  release:
+    types: [ published ]
+
+env:
+  HUSKY: '0'
+
+jobs:
+  prerelease-check:
+    name: 'Verify pre-release'
+    runs-on: ubuntu-latest
+    outputs:
+      prerelease: ${{ steps.check_prerelease.outputs.prerelease }}
+    steps:
+      - name: Check pre-release
+        id: check_prerelease
+        uses: ./.github/actions/get-release-options
+
+  release_candidate:
+    name: 'Create release candidate'
+    needs: prerelease-check
+    if: ${{ needs.prerelease-check.outputs.prerelease == 'true' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get release options
+        id: release_options
+        uses: ./.github/actions/get-release-options
+
+      - name: Git config
+        run: |
+          git config user.email github-actions@github.com
+          git config user.name github-actions
+
+      - name: TMP
+        run: |
+          VERSION=${{ steps.release_options.outputs.version }}
+          TAG_NAME=${{ steps.release_options.outputs.tag_name }}
+          PRERELEASE=${{ steps.release_options.outputs.prerelease }}
+          echo version: $VERSION
+          echo tag_name: $TAG_NAME
+          echo prerelease: $PRERELEASE
+
+#      - name: Apply version bump
+#        run: |
+#          RELEASE_VERSION=${{ steps.release_options.outputs.current_version }}
+#          npm version $RELEASE_VERSION -m "Bump to version %s" --no-git-tag-version
+#          git push
+
+#      - name: Create release branch
+#        run: |
+#          RELEASE_TAG=${{ steps.release_options.outputs.tag_name }}
+#          git checkout -b release/$RELEASE_TAG
+#          git push origin release/$RELEASE_TAG
+#
+#      - name: Print summary
+#        run: |
+#          RELEASE_TAG=${{ steps.release_options.outputs.tag_name }}
+##          TODO: MOVE TO SCRIPT
+#          RELEASE_URL=https://github.com/feliksmatsko/cicd/releases/tag/$RELEASE_TAG
+#          echo "## 🎉 Release [$RELEASE_TAG]($RELEASE_URL) successfully created" >> $GITHUB_STEP_SUMMARY

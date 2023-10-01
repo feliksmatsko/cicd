@@ -1,22 +1,12 @@
-name: "Get Release Draft"
-description: "Fetch the most recent draft release's data"
-inputs:
-  github_token:
-    description: "GitHub token"
-    required: true
-  derive_version:
-    description: "If version should be derived from the draft tag"
-    required: true
-    default: true
+name: "Get Release Options"
+description: "Derive release options"
 outputs:
-  current_version:
-    description: "Release version derived from draft release tag name"
-  current_tag:
-    description: "Draft release tag name"
-  prerelease_tag:
-    description: "Prerelease tag name"
-  latest_tag:
-    description: "Latest release tag name"
+  version:
+    description: "Release version derived from tag name"
+  tag_name:
+    description: "Release tag name"
+  prerelease:
+    description: "Is prerelease"
 runs:
   using: "node20"
   main: "main.js"
