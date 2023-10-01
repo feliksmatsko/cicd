@@ -1,3 +1,5 @@
+name: _release_drafter
+
 on:
   push:
     branches:
