@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          ref: master
 
       - name: Get release options
         id: release_options
@@ -26,14 +28,15 @@ jobs:
       - name: Apply version bump
         run: |
           VERSION=${{ steps.release_options.outputs.version }}
+          git checkout master
           npm version $VERSION -m "Bump to version %s" --no-git-tag-version
           git push
 
       - name: Create release branch
         run: |
           TAG_NAME=${{ steps.release_options.outputs.tag_name }}
-          git checkout -b release/$TAG_NAME
-          git push origin release/$TAG_NAME
+          git checkout -b release/$TAG_NAME master
+          git push -u origin release/$TAG_NAME
 
       - name: Print summary
         run: |
