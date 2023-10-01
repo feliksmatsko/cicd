@@ -47,6 +47,8 @@ jobs:
           npm version $VERSION
           git tag v$VERSION
           git push origin master --tags --force
+#          git push origin v2.12.1 --force
+#          git push --follow-tags
 
 
 #      - name: Apply version bump (minor)
