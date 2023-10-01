@@ -5,7 +5,7 @@ const versionPattern = /^v\d+\.\d+\.\d+$/;
 let summary = core.summary;
 
 function setOutput(release, propName, displayName) {
-  core.setOutput(propName, release.tag_name || '');
+  core.setOutput(propName, release?.tag_name || '');
 
   if (release) {
     const message = `${displayName}: ${release.tag_name}`
