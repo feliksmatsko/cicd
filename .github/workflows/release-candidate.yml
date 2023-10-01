@@ -1,27 +1,12 @@
-name: _release_candidate
+name: Release Candidate Maker
 
 on:
   release:
-    types: [ published, edited ]
-
-env:
-  HUSKY: '0'
+    types: [ published ]
 
 jobs:
-  prerelease-check:
-    name: 'Verify pre-release'
-    runs-on: ubuntu-latest
-    outputs:
-      prerelease: ${{ steps.check_prerelease.outputs.prerelease }}
-    steps:
-      - name: Check pre-release
-        id: check_prerelease
-        uses: ./.github/actions/get-release-options
-
   release_candidate:
-    name: 'Create release candidate'
-    needs: prerelease-check
-    if: ${{ needs.prerelease-check.outputs.prerelease == 'true' }}
+    name: 'Create release candidate branch'
     runs-on: ubuntu-latest
     permissions:
       contents: write
