@@ -2,7 +2,7 @@ name: _release_candidate
 
 on:
   release:
-    types: [ published ]
+    types: [ published, edited ]
 
 env:
   HUSKY: '0'
