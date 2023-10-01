@@ -1,7 +1,7 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 
-const versionRegExp = /^(v)?\d+\.\d+\.\d+$/;
+const versionPattern = /^(v)?\d+\.\d+\.\d+$/;
 
 async function run() {
   try {
@@ -21,7 +21,7 @@ async function run() {
     }
 
     const tagName = latestDraftRelease.tag_name;
-    if (tagName.test(versionRegExp)) {
+    if (versionPattern.test(tagName)) {
       const version = tagName.replace('v', '');
       core.info(`Release Version: ${version}`);
       core.setOutput('version', version);
