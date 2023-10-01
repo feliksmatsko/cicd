@@ -49,7 +49,6 @@ jobs:
         with:
           commitish: master
           version: ${{ steps.release_options.outputs.current_version }}
-          include-pre-releases: true
           prerelease: true
           publish: true
 
