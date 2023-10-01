@@ -44,7 +44,7 @@ jobs:
       - name: Apply version bump
         run: |
           VERSION=${{ steps.version.outputs.version }}
-          npm version $VERSION -m "%s"
+          npm version $VERSION
           git tag v$VERSION
           git push origin master --tags --force
 
