@@ -10,7 +10,7 @@ function setOutput(release, propName, displayName) {
   if (release) {
     const message = `${displayName}: ${release.tag_name}`
     core.info(message);
-    summary = summary.addRaw(message);
+    summary = summary.addRaw(`message\n`);
   }
 }
 
