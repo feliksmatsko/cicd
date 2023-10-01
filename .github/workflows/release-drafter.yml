@@ -1,5 +1,4 @@
 name: Release Drafter
-description: Drafts release notes
 
 on:
   pull_request:
