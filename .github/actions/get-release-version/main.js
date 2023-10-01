@@ -23,7 +23,7 @@ async function run() {
     const tagName = latestDraftRelease.tag_name;
     if (versionPattern.test(tagName)) {
       const version = tagName.replace('v', '');
-      core.info(`Found: v${version}`);
+      core.info(`Found draft release: v${version}`);
       core.setOutput('version', version);
     } else {
       core.setFailed(`Invalid tag name: ${tagName}`);
