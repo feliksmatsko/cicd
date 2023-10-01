@@ -42,12 +42,11 @@ jobs:
         run: |
           VERSION=${{ steps.release.outputs.version }}
           TAG_NAME=${{ steps.release.outputs.tag_name }}
-          git tag -d $TAG_NAME || echo "Tag ${{TAG_NAME}} not found locally, skipping deletion"
-          git push origin :refs/tags/$TAG_NAME || echo "Tag ${{TAG_NAME}} not found remotely, skipping deletion"
+          git tag -d $TAG_NAME || echo "Tag $TAG_NAME not found locally, skipping deletion"
+          git push origin :refs/tags/$TAG_NAME || echo "Tag $TAG_NAME not found remotely, skipping deletion"
           npm version $VERSION -m "Bump to version %s"
           git push
           git push origin $TAG_NAME --force
-
 
 #      - name: Push version bump
 #        run: git push origin master --follow-tags --force
