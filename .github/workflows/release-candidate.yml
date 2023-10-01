@@ -39,7 +39,7 @@ jobs:
         run: |
           CURRENT_VERSION=${{ steps.release_options.outputs.current_version }}
           CURRENT_TAG=${{ steps.release_options.outputs.current_tag }}
-          npm version $CURRENT_VERSION -m "Bump to version %s"
+          npm version $CURRENT_VERSION -m "Bump to version %s" --no-git-tag-version
           git push
           git push origin $CURRENT_TAG --force
 
