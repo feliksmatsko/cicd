@@ -29,33 +29,37 @@ jobs:
           git config user.name github-actions    
 
       - name: Get Release Options
-        id: release
-        uses: ./.github/actions/get-release-draft
+        id: release_options
+        uses: ./.github/actions/get-release-options
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
       # TODO: refactor to action
       - name: Apply version bump
         run: |
-          VERSION=${{ steps.release.outputs.version }}
-          TAG_NAME=${{ steps.release.outputs.tag_name }}
-          npm version $VERSION -m "Bump to version %s"
+          CURRENT_VERSION=${{ steps.release_options.outputs.current_version }}
+          CURRENT_TAG=${{ steps.release_options.outputs.current_tag }}
+          npm version $CURRENT_VERSION -m "Bump to version %s"
           git push
-          git push origin $TAG_NAME --force
+          git push origin $CURRENT_TAG --force
 
       - uses: release-drafter/release-drafter@v5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           commitish: master
-          version: ${{ steps.release.outputs.version }}
+          version: ${{ steps.release_options.outputs.current_version }}
+          include-pre-releases: true
+          prerelease: true
           publish: true
 
       - name: Create release branch
         run: |
-          TAG_NAME=${{ steps.release.outputs.tag_name }}
-          git checkout -b release/$TAG_NAME
-          git push origin release/$TAG_NAME
+          CURRENT_TAG=${{ steps.release_options.outputs.current_tag }}
+          git checkout -b release/$CURRENT_TAG
+          git push origin release/$CURRENT_TAG
 
       - name: Summary
-        run: echo "## 🎉 Release ${{ steps.release.outputs.tag_name }} successfully created" >> $GITHUB_STEP_SUMMARY
+        run: |
+          CURRENT_TAG=${{ steps.release_options.outputs.current_tag }}
+          echo "## 🎉 Release [$CURRENT_TAG](https://github.com/feliksmatsko/cicd/releases/tag/$CURRENT_TAG) successfully created" >> $GITHUB_STEP_SUMMARY
