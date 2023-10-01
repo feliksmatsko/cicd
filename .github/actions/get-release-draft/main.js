@@ -7,7 +7,9 @@ async function run() {
         const octokit = github.getOctokit(token);
         const {owner, repo} = github.context.repo;
 
-        const {data} = await octokit.request(`GET /repos/${owner}/${repo}/releases&per_page=3`);
+        core.info(`123 /repos/${owner}/${repo}/releases?per_page=3`);
+
+        const {data} = await octokit.request(`GET /repos/${owner}/${repo}/releases?per_page=3`);
 
         const tmp = data.map(item => item.name).join(':');
         core.info(`Names list: "${tmp}"`);
