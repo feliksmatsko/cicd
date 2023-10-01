@@ -1,0 +1,12 @@
+name: "Get Release Version"
+description: "Fetch the most recent draft release's tag name and parse its version"
+inputs:
+  github-token:
+    description: "GitHub token"
+    required: true
+outputs:
+  version:
+    description: "Release version"
+runs:
+  using: "node20"
+  main: "main.js"
