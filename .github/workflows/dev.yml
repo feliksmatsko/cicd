@@ -1,0 +1,28 @@
+name: 'DEV'
+
+on: workflow_dispatch
+
+env:
+  PROJECT_ID: tonomo-core-dev
+  REGION: us-central1
+  APP: core-api
+
+concurrency:
+  group: ${{ github.workflow }} @ ${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: dev
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: 'Checkout code'
+        uses: actions/checkout@v4
+
+      - name: Validate Branch Name
+        uses: ./.github/actions/verify-branch-name
+        with:
+          regexp: "^release/v\d+\.\d+\.\d+$"
