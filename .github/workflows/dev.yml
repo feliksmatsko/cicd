@@ -25,4 +25,4 @@ jobs:
       - name: Validate Branch Name
         uses: ./.github/actions/verify-branch-name
         with:
-          regexp: "^release/v\d+\.\d+\.\d+$"
+          regexp: "^release/v\\d+\\.\\d+\\.\\d+$"
